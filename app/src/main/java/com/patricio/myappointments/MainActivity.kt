@@ -4,11 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.patricio.myappointments.PreferenceHelper.get
 import com.patricio.myappointments.PreferenceHelper.set
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private val snackBar by lazy {
+        Snackbar.make(mainLayout, R.string.press_back_again, Snackbar.LENGTH_SHORT)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,5 +54,12 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, MenuActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onBackPressed() {
+        if(snackBar.isShown)
+            super.onBackPressed()
+        else
+            snackBar.show()
     }
 }
